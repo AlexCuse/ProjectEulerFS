@@ -1,0 +1,228 @@
+﻿module ProjectEuler.Trash
+
+#light
+
+//Problem 26 stages
+
+// Mutable State
+
+let floyd func x =
+    let mutable tortoise = func x
+    let mutable hare = func (func x)
+    while not (tortoise = hare) do
+        tortoise <- func tortoise
+        hare <- func(func hare)
+
+    let mutable mu = 0
+    hare <- tortoise
+    tortoise <- x
+    while not (tortoise = hare) do
+        tortoise <- func tortoise
+        hare <- func hare
+        mu <- mu + 1
+
+    let mutable lam = 1
+    hare <- func tortoise
+    while not (tortoise = hare) do
+        hare <- func hare
+        lam <- lam + 1
+
+    lam, mu
+
+let brent f x =
+    let mutable power = 1
+    let mutable lam = 1
+    let mutable tortoise = x
+    let mutable hare = f x 
+
+    while not (tortoise = hare) do
+        if power = lam then
+            tortoise <- hare
+            power <- power * 2
+            lam <- 0
+        hare <- f hare
+        lam <- lam + 1
+
+    let mutable mu = 0
+    tortoise <- x
+    hare <- x
+
+    for i in [1 .. lam] do
+        hare <- f hare
+
+    while not (tortoise = hare) do
+        tortoise <- f tortoise
+        hare <- f hare
+        mu <- mu + 1
+
+    lam, mu
+
+let rec calc lst func longestCycleYet numberYieldingCycle =
+    match lst with
+        | head :: tail 
+            -> 
+                let tp = func head
+                if (max longestCycleYet (fst tp)) = longestCycleYet then
+                    calc tail func longestCycleYet numberYieldingCycle
+                else 
+                    calc tail func (fst tp) head
+        | [] -> numberYieldingCycle
+
+type DataContainer(n, v, r) =
+    member x.num = n
+    member x.value = v
+    member x.rem = r
+
+    override x.Equals(that) =
+        match that with
+            | :? DataContainer as dc -> 
+                dc.num = x.num && dc.value = x.value && dc.rem = x.rem
+            | _ -> false
+
+let findNumberGeneratingLongestRepeatingSequence list =
+    let rec calc lst func longestCycleYet numberYieldingCycle =
+        match lst with
+            | head :: tail 
+                -> 
+                    let tp = func head
+                    if (max longestCycleYet (fst tp)) = longestCycleYet then
+                        calc tail func longestCycleYet numberYieldingCycle
+                    else 
+                        calc tail func (fst tp) head
+            | [] -> numberYieldingCycle
+
+    let f (r:DataContainer) = 
+        DataContainer(r.num, r.rem / r.num, ((r.rem % r.num) * 10))
+        
+    //s/b able to use floyd or brent implementations
+    calc list (fun num -> brent f (DataContainer(num, 0, 1))) 0 0 
+
+
+// Mutable State with comparator
+// a fully generic brent implementation (that doesn't require a type with equals implemented)
+
+let brentComparator f comp x =
+    let mutable power = 1
+    let mutable lam = 1
+    let mutable tortoise = x
+    let mutable hare = f x 
+
+    while not (comp tortoise hare) do
+        if power = lam then
+            tortoise <- hare
+            power <- power * 2
+            lam <- 0
+        hare <- f hare
+        lam <- lam + 1
+
+    let mutable mu = 0
+    tortoise <- x
+    hare <- x
+
+    for i in [1 .. lam] do
+        hare <- f hare
+
+    while not (comp tortoise hare) do
+        tortoise <- f tortoise
+        hare <- f hare
+        mu <- mu + 1
+
+    lam, mu
+
+
+// immutable take one
+let brentImmutable f x =
+    let resultsTuple = (1, 1, 0, x, f x)
+
+    let rec applyUntilEqual func (power, lam, mu, tortoise, hare) =
+        if (tortoise = hare) then
+            (power, lam, mu, tortoise, hare)
+        else
+            applyUntilEqual func (power, lam, mu, tortoise, hare)
+
+    let partOne (power, lam, mu, tortoise, hare) =
+        if (power = lam) then
+            (power * 2, 1, mu, hare, (f hare))
+        else 
+            (power, lam + 1, mu, tortoise, (f hare))
+
+    let stepOneResult = 
+        applyUntilEqual partOne resultsTuple
+    
+    let accelerateHare (power, lam, mu, tortoise, hare) =
+        let rec accelerate times h =
+            if times = 1 then
+                hare
+            else 
+                accelerate (times - 1) (f h)
+        (power, lam, mu, tortoise, accelerate lam hare)
+
+    let accelerated = accelerateHare stepOneResult
+
+    let partTwo (power, lam, mu, tortoise, hare) =
+        (power, lam, mu + 1, f tortoise, f hare)
+
+    let finalResult = applyUntilEqual partTwo accelerated
+
+    let result (_, lam, mu, _, _) =
+        lam, mu
+
+    result finalResult
+
+
+
+
+// immutable w/ type instead of tuple
+// get a stack overflow on this for some reason
+type dataPackage (p, l, m, t, h) =
+    member x.Power = p
+    member x.Lam = l
+    member x.Mu = m
+    member x.Tortoise = t
+    member x.Hare = h
+
+let brentProperWithType f x = 
+                   
+    let rec applyUntilEqual func (v:dataPackage) =
+        if (v.Tortoise = v.Hare) then
+            v
+        else
+            applyUntilEqual func v
+
+    let phaseOne (v:dataPackage) =
+        if (v.Power = v.Lam) then
+            dataPackage(v.Power * 2, 1, v.Mu, v.Hare, (f v.Hare))
+        else 
+            dataPackage(v.Power, v.Lam + 1, v.Mu, v.Tortoise, (f v.Hare))
+
+    let accelerateHare (v:dataPackage) =
+        let rec accelerate times h =
+            if times = 1 then
+                h
+            else 
+                accelerate (times - 1) (f h)
+        dataPackage(v.Power, v.Lam, v.Mu, v.Tortoise, accelerate v.Lam v.Hare)
+
+    let phaseTwo (v:dataPackage) =
+        dataPackage(v.Power, v.Lam, (v.Mu + 1), (f v.Tortoise), (f v.Hare))
+
+    dataPackage(1, 1, 0, x, f x) 
+        |> applyUntilEqual phaseOne
+        |> accelerateHare
+        |> applyUntilEqual phaseTwo
+        |> fun x -> x.Lam, x.Mu
+
+let findNumberGeneratingLongestRepeatingSequenceWithComparator list =
+    let f (a, b, c) = 
+        a, c / a, (c % a) * 10
+    
+    let comp (a1, b1, c1) (a2, b2, c2) =
+        a1 = a2 && b2 = b2 && c1 = c2
+
+    calc list (fun num -> brentComparator f comp (num, 0, 1)) 0 0 
+
+
+
+
+//------------------
+

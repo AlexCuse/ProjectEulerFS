@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{901a2cf4-7fa9-4637-be40-e91f255d1ccc}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ProjectEuler</RootNamespace>
+    <AssemblyName>ProjectEuler</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Name>ProjectEuler</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(ProgramFiles)\Microsoft F#\v4.0\Microsoft.FSharp.Targets" />
+  <ItemGroup>
+    <Compile Include="PrimeFinder.fs" />
+    <Compile Include="Problem1.fs" />
+    <Compile Include="Problem2.fs" />
+    <Compile Include="Problem3.fs" />
+    <Compile Include="Problem4.fs" />
+    <Compile Include="Problem5.fs" />
+    <Compile Include="Problem6.fs" />
+    <Compile Include="Problem7.fs" />
+    <Compile Include="Problem8.fs" />
+    <Compile Include="Problem9.fs" />
+    <Compile Include="Problem10.fs" />
+    <Compile Include="Problem11.fs" />
+    <Compile Include="Problem12.fs" />
+    <Compile Include="Problem13.fs" />
+    <Compile Include="Problem14.fs" />
+    <Compile Include="Problem15.fs" />
+    <Compile Include="Problem16.fs" />
+    <Compile Include="Problem17.fs" />
+    <Compile Include="Problem18.fs" />
+    <Compile Include="Problem19.fs" />
+    <Compile Include="Problem20.fs" />
+    <Compile Include="Problem21.fs" />
+    <Compile Include="Problem22.fs" />
+    <Compile Include="Problem23.fs" />
+    <Compile Include="Problem24.fs" />
+    <Compile Include="Problem25.fs" />
+    <Compile Include="Problem26.fs" />
+    <Compile Include="Problem28.fs" />
+    <Compile Include="Problem30.fs" />
+    <Compile Include="Problem36.fs" />
+    <Compile Include="Program.fs" />
+    <Content Include="names.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Trash.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.Core" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	     Other similar extension points exist, see Microsoft.Common.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>
