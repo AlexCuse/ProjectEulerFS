@@ -32,6 +32,7 @@
   </PropertyGroup>
   <Import Project="$(ProgramFiles)\Microsoft F#\v4.0\Microsoft.FSharp.Targets" />
   <ItemGroup>
+    <Compile Include="Memoizer.fs" />
     <Compile Include="PrimeFinder.fs" />
     <Compile Include="Problem1.fs" />
     <Compile Include="Problem2.fs" />
