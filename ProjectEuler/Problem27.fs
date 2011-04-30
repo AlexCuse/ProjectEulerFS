@@ -4,7 +4,7 @@
 
 let solve =
     let primes1k = 
-        PrimeFinder.primes 1000L //should be enough
+        PrimeFinder.primes 100000L //should be enough
         |> Seq.map (int)
         |> List.ofSeq
     
