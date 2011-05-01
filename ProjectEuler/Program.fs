@@ -34,24 +34,3 @@ let rec eulerRepl() =
         eulerRepl()
 
 eulerRepl()
-
-//let dynamicExecute probNum =
-//    let compiler = new FSharpCodeProvider()
-//    let code = "#light\nmodule GeneratedCode\nlet GenTest = fun () -> printfn \"%s\" (Problem" + probNum + ".solve)"
-//    //let code = "#light\nmodule GeneratedCode\nlet GenTest = fun () -> printfn \"%A\" (\"Problem " + probNum + " answer is: \"" + "(Problem" + probNum + ".doStuff)) \n"
-//    let options = new System.CodeDom.Compiler.CompilerParameters()
-//    options.GenerateInMemory <- true
-//    options.ReferencedAssemblies.Add(System.Reflection.Assembly.GetExecutingAssembly().FullName)|>ignor
-//    let cr = compiler.CompileAssemblyFromSource(options, [|code|])
-//    printfn "Compiler return value: %d" cr.NativeCompilerReturnValue
-//    for s in cr.Output do printfn "%s" s
-//    for e in cr.Errors do printfn "%O" e
-//    let ass = cr.CompiledAssembly
-//    let modul = ass.GetType("GeneratedCode")
-//    printfn "module %O" modul
-//    let funcs = modul.GetMember("GenTest")
-//    let func = funcs.[0] :?> MethodInfo
-//    let typ = func.GetType()
-//    printfn "member %A of type %A" func typ.FullName
-//    func.Invoke(None,[||]) |> ignore
-//    printfn "compiler test done."

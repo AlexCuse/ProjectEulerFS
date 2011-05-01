@@ -22,5 +22,5 @@ let sieve (x:Int64) =
  
 let primes (x:Int64) = //get all primes up to x - can this be more sequency?
     let s = sieve x
-    List.filter(fun n ->not (s.Contains(n))) [Convert.ToInt64(1)..x]
+    [Convert.ToInt64(1)..x] |> List.filter(fun n ->not (s.Contains(n))) 
 
