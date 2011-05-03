@@ -4,7 +4,7 @@
 
 let deconstruct lst idx1 idx2 =
     let get arr =
-        arr |> Array.fold (fun x acc-> (x * 10) + acc) 0
+        arr |> Array.fold (fun acc x -> (acc * 10) + x) 0
     let arr = lst |> List.toArray
     let finIdx = (arr |> Array.length) - 1
     get (arr.[0..idx1 - 1]), get (arr.[idx1..idx2-1]), get (arr.[idx2..finIdx])
