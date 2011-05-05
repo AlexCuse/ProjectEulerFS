@@ -10,3 +10,8 @@ let rec permutations list taken =
             for perm in permutations list (Set.add l taken)  do
               yield l::perm }
 
+let rec greatestCommonDivisor a b =
+    match b with
+    | b when b = 0 -> a
+    | b -> greatestCommonDivisor b (a % b)
+

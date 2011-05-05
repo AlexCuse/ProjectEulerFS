@@ -32,5 +32,5 @@ let rec eulerRepl() =
             | :? System.NullReferenceException -> printfn "Problem %d not solved yet" q.Value
             | _ as ex -> printfn "%s: %s" (ex.GetType().Name) ex.Message
         eulerRepl()
-
+//TODO: Get Innermost Exception for Display
 eulerRepl()
