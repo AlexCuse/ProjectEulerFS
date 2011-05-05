@@ -9,9 +9,6 @@ let pairs =
                 if not (numerator = denominator || numerator > denominator || numerator % 10 = 0 || denominator % 10 = 0) then
                     yield numerator, denominator
     }
-
-let decompose num =
-    num / 10, num % 10
     
 let isCuriousFraction numerator denominator =    
     let compareNormalToReduced num den =
@@ -19,6 +16,10 @@ let isCuriousFraction numerator denominator =
             double x / double y
         divideInts num den = divideInts numerator denominator
 
+
+    let decompose num =
+        num / 10, num % 10
+    
     let n = decompose numerator
     let d = decompose denominator
     
