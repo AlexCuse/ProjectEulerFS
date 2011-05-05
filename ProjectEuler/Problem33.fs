@@ -23,8 +23,8 @@ let isCuriousFraction numerator denominator =
     let d = decompose denominator
     
     match n, d with
-        | _ when fst(n) = snd (d) -> compareNormalToReduced (snd(n)) (fst(d))
-        | _ when snd(n) = fst (d) -> compareNormalToReduced (fst(n)) (snd(d))
+        | _ when fst(n) = snd(d) -> compareNormalToReduced (snd(n)) (fst(d))
+        | _ when snd(n) = fst(d) -> compareNormalToReduced (fst(n)) (snd(d))
         | _ -> false
 
 let solve = 
