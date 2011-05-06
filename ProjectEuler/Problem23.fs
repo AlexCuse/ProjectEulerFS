@@ -1,4 +1,4 @@
-﻿module ProjectEuler.Problem231
+﻿module ProjectEuler.Problem23
 
 #light
 open System;
