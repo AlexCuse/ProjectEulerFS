@@ -1,8 +1,9 @@
 ﻿module ProjectEuler.Problem23
 
 #light
+open Util
 
-let factors x = Util.factors x
+let factors x = factors x
 
 let isAbundant x =
     let sum = factors x |> Seq.fold (+) 0

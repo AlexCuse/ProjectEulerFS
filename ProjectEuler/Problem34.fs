@@ -2,12 +2,7 @@
 
 #light
 
-let digits n =
-    let rec decomposeFunc n listSoFar =
-        match n with 
-        | 0 -> listSoFar
-        | _ -> decomposeFunc (n / 10) (listSoFar @ [n % 10])
-    decomposeFunc n []
+open Util
 
 let factorial number =
     let rec factorialTail n tail =
@@ -18,7 +13,8 @@ let factorial number =
     factorialTail number 1
 
 let sumFactorials n =
-    digits n 
+    n
+    |> digitsFrom
     |> List.fold (fun acc x -> acc + (factorial x)) 0
 
 let solve =

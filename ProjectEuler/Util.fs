@@ -38,3 +38,13 @@ let factors x =
                 lowFactors @ [ sqrt; x / sqrt ] @ (highFactors |> List.rev)
             else
                 lowFactors @ (highFactors |> List.rev)
+
+let digitsFrom n =
+    let rec decomposeFunc n listSoFar =
+        match n with 
+        | 0 -> listSoFar
+        | _ -> decomposeFunc (n / 10) ([n % 10] @ listSoFar)
+    decomposeFunc n []
+
+let toNumber digits =
+    digits |> Array.fold (fun acc x -> acc * 10 + x) 0
