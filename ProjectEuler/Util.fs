@@ -1,6 +1,7 @@
 ﻿module ProjectEuler.Util
 
 #light
+open System
 
 //http://stackoverflow.com/questions/286427/calculating-permutations-in-f
 let rec permutations list taken = 
@@ -15,3 +16,25 @@ let rec greatestCommonDivisor a b =
     | b when b = 0 -> a
     | b -> greatestCommonDivisor b (a % b)
 
+let factors x =
+    match x with
+        | _ when x < 0 -> failwith "no factors, fool!"
+        | 0 -> [] | 1 -> [1]
+        | _ ->
+            let sqrt = int (Math.Sqrt((float x)))
+
+            let factorPairs = 
+                [1 .. sqrt - 1] 
+                    |> Seq.filter(fun p -> x % p = 0) 
+                    |> Seq.map(fun p -> (p, x / p))
+
+            let (lowFactors, highFactors) = factorPairs |> List.ofSeq |> List.unzip
+
+            // x is a perfect square
+            if sqrt * sqrt = x then
+                lowFactors @ [ sqrt ] @ (highFactors |> List.rev)
+            // if floor(sqrt) is a factor
+            elif x % sqrt = 0 then
+                lowFactors @ [ sqrt; x / sqrt ] @ (highFactors |> List.rev)
+            else
+                lowFactors @ (highFactors |> List.rev)

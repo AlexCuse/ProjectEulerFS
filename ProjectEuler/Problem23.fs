@@ -1,30 +1,8 @@
 ﻿module ProjectEuler.Problem23
 
 #light
-open System;
 
-let factors x =
-    match x with
-        | _ when x < 0 -> failwith "no factors, fool!"
-        | 0 -> [] | 1 -> [1]
-        | _ ->
-            let sqrt = int (Math.Sqrt((float x)))
-
-            let factorPairs = 
-                [1 .. sqrt - 1] 
-                    |> Seq.filter(fun p -> x % p = 0) 
-                    |> Seq.map(fun p -> (p, x / p))
-
-            let (lowFactors, highFactors) = factorPairs |> List.ofSeq |> List.unzip
-
-            // x is a perfect square
-            if sqrt * sqrt = x then
-                lowFactors @ [ sqrt ] @ (highFactors |> List.rev)
-            // if floor(sqrt) is a factor
-            elif x % sqrt = 0 then
-                lowFactors @ [ sqrt; x / sqrt ] @ (highFactors |> List.rev)
-            else
-                lowFactors @ (highFactors |> List.rev)
+let factors x = Util.factors x
 
 let isAbundant x =
     let sum = factors x |> Seq.fold (+) 0
