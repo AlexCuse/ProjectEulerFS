@@ -11,7 +11,7 @@ let primes =
 
 let rotations n =
     let digits = 
-        n |> digitsFrom |> List.toArray
+        n |> digitsFrom
 
     let rotate shift dg =
         let len = dg |> Array.length

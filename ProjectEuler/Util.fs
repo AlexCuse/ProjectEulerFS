@@ -44,7 +44,7 @@ let digitsFrom n =
         match n with 
         | 0 -> listSoFar
         | _ -> decomposeFunc (n / 10) ([n % 10] @ listSoFar)
-    decomposeFunc n []
+    decomposeFunc n [] |> List.toArray
 
 let toNumber digits =
     digits |> Array.fold (fun acc x -> acc * 10 + x) 0
