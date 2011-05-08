@@ -8,22 +8,34 @@ open PrimeFinder
 let primes = 
     1000000L 
     |> primes
-    |> Seq.map int
-    |> Seq.skipWhile(fun x -> x < 23)//first candidate
+    |> List.map int
     |> Set.ofSeq
 
 let truncatable num =
     let d = num |> digitsFrom
-    let rec truncations dgts =
+    let rec leftTruncations dgts =
         seq {
             match dgts with 
                 | head :: tail -> 
                     yield dgts |> toNumber
-                    yield! (truncations tail)
+                    yield! (leftTruncations tail)
+                | [] -> ()
+        }
+    
+    let rec rightTruncations dgts =
+        seq {
+            match dgts with 
+                | head :: tail -> 
+                    yield dgts |> List.rev |> toNumber
+                    yield! (rightTruncations tail)
                 | [] -> ()
         }
 
-    (truncations d) |> Seq.forall (fun x -> primes.Contains x) 
+    (leftTruncations d) |> Seq.forall (fun x -> primes.Contains x) &&
+    (rightTruncations (d |> List.rev)) |> Seq.forall(fun x -> primes.Contains x)
 
 let solve =
-    0
+    primes
+    |> Seq.skipWhile(fun x -> x < 23)//first candidate
+    |> Seq.filter truncatable
+    |> Seq.sum

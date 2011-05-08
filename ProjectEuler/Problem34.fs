@@ -15,7 +15,7 @@ let factorial number =
 let sumFactorials n =
     n
     |> digitsFrom
-    |> Array.fold (fun acc x -> acc + (factorial x)) 0
+    |> List.fold (fun acc x -> acc + (factorial x)) 0
 
 let solve =
     [3 .. factorial 10]//2540160

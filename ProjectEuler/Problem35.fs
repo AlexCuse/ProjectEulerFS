@@ -11,18 +11,20 @@ let primes =
 
 let rotations n =
     let digits = 
-        n |> digitsFrom
+        n |> digitsFrom |> List.toArray
 
     let rotate shift dg =
-        let len = dg |> Array.length
-        if shift % len = 0 then dg
-        else Array.append dg.[shift..(len - 1)] dg.[..(shift - 1)]
+        let innerRotate =
+            let len = dg |> Array.length
+            if shift % len = 0 then dg
+            else dg.[shift..(len - 1)] |> Array.append dg.[..(shift - 1)]
+        innerRotate |> Array.toList
         
     seq {
         for i in 1 .. (digits.Length - 1) do
             yield
                 digits
-                |> rotate i 
+                |> rotate i
                 |> toNumber
     }
 
