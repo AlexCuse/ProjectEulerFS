@@ -9,7 +9,7 @@ let primes =
     1000000L 
     |> primes
     |> List.map int
-    |> Set.ofSeq
+    |> Set.ofList
 
 let truncatable num =
     let d = num |> digitsFrom

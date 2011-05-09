@@ -14,10 +14,14 @@ let pandigital (n:string) =
         allDigits |> List.forall (fun x -> digits.Contains x)
 
 let vals = 
+    let getUpperBound n =
+        let x = n |> digitsFrom |> List.length
+        (int (9.0 / (float x) |> Math.Ceiling))
     seq {
         for i in 1 .. 99999 do
-            yield [1 .. 2]//2 should work, may need to try [1..3], [1..4], etc... 
-                |> List.fold (fun acc x -> acc + (i * x).ToString()) ""
+            for j in 1 .. getUpperBound i do
+                yield [1 .. j]
+                    |> List.fold (fun acc x -> acc + (i * x).ToString()) ""
     }
 
 let solve =
