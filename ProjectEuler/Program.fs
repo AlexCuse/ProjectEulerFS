@@ -4,6 +4,11 @@ open System;
 open System.Diagnostics;
 open System.Reflection;
 
+let rec innerException (ex: Exception) =
+    match ex.InnerException with
+    | null -> ex.Message
+    | _ -> innerException ex.InnerException
+
 let dynamicExecute prob =
     let probNum = prob.ToString()
     let asm = Assembly.GetExecutingAssembly()
@@ -30,7 +35,7 @@ let rec eulerRepl() =
             printfn "Problem %d answer is %A\nSolved In: %A\n\n" q.Value answer tmr.Elapsed
         with
             | :? System.NullReferenceException -> printfn "Problem %d not solved yet" q.Value
-            | _ as ex -> printfn "%s: %s" (ex.GetType().Name) ex.Message
+            | _ as ex -> printfn "%s: %s" (ex.GetType().Name) (ex |> innerException)
         eulerRepl()
 //TODO: Get Innermost Exception for Display
 eulerRepl()
