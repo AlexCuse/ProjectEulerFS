@@ -6,7 +6,7 @@ open System.Reflection;
 
 let rec innerException (ex: Exception) =
     match ex.InnerException with
-    | null -> ex.Message
+    | null -> ex
     | _ -> innerException ex.InnerException
 
 let dynamicExecute prob =
@@ -35,7 +35,9 @@ let rec eulerRepl() =
             printfn "Problem %d answer is %A\nSolved In: %A\n\n" q.Value answer tmr.Elapsed
         with
             | :? System.NullReferenceException -> printfn "Problem %d not solved yet" q.Value
-            | _ as ex -> printfn "%s: %s" (ex.GetType().Name) (ex |> innerException)
+            | _ as ex -> 
+                let x = ex |> innerException
+                printfn "%s: %s\n\n%s" (x.GetType().Name) x.Message x.StackTrace
         eulerRepl()
 //TODO: Get Innermost Exception for Display
 eulerRepl()

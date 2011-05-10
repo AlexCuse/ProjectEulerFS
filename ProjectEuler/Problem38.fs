@@ -15,8 +15,9 @@ let pandigital (n:string) =
 
 let vals = 
     let getUpperBound n =
-        let x = n |> digitsFrom |> List.length
-        (int (9.0 / (float x) |> Math.Ceiling))
+        let x = float (n |> digitsFrom |> List.length)
+        //int (x |> (/) 9.0 |> Math.Ceiling)
+        int ((9.0/x) |> Math.Ceiling)
     seq {
         for i in 1 .. 99999 do
             for j in 1 .. getUpperBound i do
