@@ -39,6 +39,23 @@ let factors x =
             else
                 lowFactors @ (highFactors |> List.rev)
 
+let isPrime n =
+    let rec checkRemaining n r f =
+        if f >= r then true
+        elif n % f = 0 then false
+        elif n % (f + 2) = 0 then false
+        else checkRemaining n r (f + 6)
+        
+    match n with 
+    | 1 -> false
+    | _ when n < 4 -> true
+    | _ when n % 2 = 0 -> false
+    | _ when n < 9 -> true
+    | _ when n % 3 = 0 -> false
+    | _ ->
+        let r = int ((float n) |> Math.Sqrt |> Math.Floor)
+        checkRemaining n r 5
+
 let digitsFrom n =
     let rec decomposeFunc n listSoFar =
         match n with 
