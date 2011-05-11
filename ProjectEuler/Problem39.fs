@@ -17,7 +17,8 @@ let possibleTriangles perimeter =
     |> List.filter (fun c ->
         [1..perimeter]
         |> Seq.takeWhile (fun x -> (x + c) < perimeter) //highest value that has remote possibility of matching 
-        |> Seq.exists (fun b -> (pown (perimeter-b-c) 2 + pown b 2) = pown c 2)) // aa + bb == cc
+        |> Seq.exists (fun b -> (pown (perimeter-b-c) 2 + pown b 2) = pown c 2) // aa + bb == cc
+    ) 
     |> List.length
 
 let solve = 
