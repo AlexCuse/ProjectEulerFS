@@ -76,11 +76,15 @@
     <Compile Include="Problem39.fs" />
     <Compile Include="Problem40.fs" />
     <Compile Include="Problem41.fs" />
+    <Compile Include="Problem42.fs" />
     <Compile Include="Program.fs" />
     <Content Include="names.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Trash.txt" />
+    <Content Include="words.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core" />
