@@ -14,9 +14,7 @@ open System
 let primes = PrimeFinder.primes 7654321L |> List.map int |> Set.ofList
 
 let solve = 
-    Util.permutations [1..7] Set.empty
+    Util.permutations [7..-1..1] Set.empty
         |> Seq.map Util.toNumber
-        |> List.ofSeq
-        |> List.sortBy (fun x -> -1 * x)
         |> Seq.filter primes.Contains
         |> Seq.head
