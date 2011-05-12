@@ -35,6 +35,7 @@
     <Compile Include="Util.fs" />
     <Compile Include="Memoizer.fs" />
     <Compile Include="PrimeFinder.fs" />
+    <Compile Include="ShapeNumbers.fs" />
     <Compile Include="Problem1.fs" />
     <Compile Include="Problem2.fs" />
     <Compile Include="Problem3.fs" />
@@ -78,6 +79,8 @@
     <Compile Include="Problem41.fs" />
     <Compile Include="Problem42.fs" />
     <Compile Include="Problem43.fs" />
+    <Compile Include="Problem44.fs" />
+    <Compile Include="Problem45.fs" />
     <Compile Include="Program.fs" />
     <Content Include="names.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
