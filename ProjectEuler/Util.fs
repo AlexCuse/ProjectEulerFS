@@ -2,6 +2,7 @@
 
 #light
 open System
+open Microsoft.FSharp.Core.Operators
 
 //http://stackoverflow.com/questions/286427/calculating-permutations-in-f
 let rec permutations list taken = 
@@ -53,7 +54,7 @@ let isPrime n =
     | _ when n < 9 -> true
     | _ when n % 3 = 0 -> false
     | _ ->
-        let r = int ((float n) |> Math.Sqrt |> Math.Floor)
+        let r = (float n) |> sqrt |> ceil |> int
         checkRemaining n r 5
 
 let digitsFrom n =
