@@ -2,13 +2,7 @@
 
 #light
 
-open Util
-
-let digitsFrom n =
-    let rec decomposeFunc n listSoFar =
-        if n = 0I then listSoFar
-        else decomposeFunc (n / 10I) ([n % 10I] @ listSoFar)
-    decomposeFunc n []
+open BigIntUtil
 
 let solve =
     seq {
