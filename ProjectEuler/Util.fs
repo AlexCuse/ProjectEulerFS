@@ -41,21 +41,27 @@ let factors x =
                 lowFactors @ (highFactors |> List.rev)
 
 let isPrime n =
-    let rec checkRemaining n r f =
-        if f >= r then true
-        elif n % f = 0 then false
-        elif n % (f + 2) = 0 then false
-        else checkRemaining n r (f + 6)
-        
-    match n with 
-    | 1 -> false
-    | _ when n < 4 -> true
-    | _ when n % 2 = 0 -> false
-    | _ when n < 9 -> true
-    | _ when n % 3 = 0 -> false
-    | _ ->
-        let r = (float n) |> sqrt |> ceil |> int
-        checkRemaining n r 5
+    let rec checkRemaining composite i num =
+        if composite then false
+            elif i*i > num then true else
+                checkRemaining (num % i = 0 || num % (i+2) = 0) (i+6) num
+
+    match n with
+    | n when n<=1 -> false
+    | 2 | 3 -> true
+    | n' when n' &&& 1 = 0 || n' % 3 = 0 -> false //even or multiple of 3
+    | n' ->  checkRemaining false 5 n'  
+
+let isPrime2 n =
+    match n with
+    | n when n<=1L -> false
+    | 2L | 3L -> true
+    | N when N &&& 1L = 0L || N%3L = 0L -> false
+    | N -> let rec aux composite i num =
+               if composite then false
+                   elif i*i > num then true else
+                       aux (num % i = 0L || num % (i+2L) = 0L) (i+6L) num
+           aux false 5L N  
 
 let digitsFrom n =
     let rec decomposeFunc n listSoFar =
