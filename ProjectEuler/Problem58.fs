@@ -1,19 +1,6 @@
 ﻿module ProjectEuler.Problem58
 
 #light
-(*
-
-21 22 23 24 25
-20  7  8  9 10
-19  6  1  2 11
-18  5  4  3 12
-17 16 15 14 13
-
-let calcRing n =
-    let nSquared = n * n 
-    nSquared + (nSquared - (n - 1)) + (nSquared - (2 * (n - 1))) + (nSquared - (3 * (n - 1)))
-
-*)
 
 open Util
 
@@ -27,10 +14,11 @@ let corners n =
     [3..-1..0] |> List.map (fun c -> positionCalc n c)
 
 let solve =
+    let countPrimes x =
+        x |> List.fold(fun acc n -> if (isPrime n) then acc + 1 else acc ) 0
+
     ringSizes
     |> Seq.zip (ringSizes |> Seq.map corners)
-    |> Seq.scan (fun (pcount, sz) (x, y)-> 
-        pcount + (x |> List.fold(fun acc n -> if (isPrime n) then acc + 1 else acc ) 0)
-        , y) (0,0)
+    |> Seq.scan (fun (pcount, sz) (x, y)-> pcount + (x |> countPrimes), y) (0,0)
     |> Seq.skipWhile (fun (pcount, sz) -> pcount = 0 || ((float pcount) / (float (sz * 2))) > 0.1)
     |> Seq.head
