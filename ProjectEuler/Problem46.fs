@@ -9,8 +9,8 @@ let oddComposites =
     |> Seq.filter (fun x -> not(isPrime x))
 
 let primes =
-    PrimeFinder.primes 1000000L
-    |> List.map int
+    Seq.unfold(fun x -> Some(x, x + 1)) 1
+    |> Seq.filter isPrime
 
 let goldbach n =
     primes 
