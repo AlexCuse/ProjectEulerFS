@@ -38,7 +38,7 @@ type Combination(n : int, k : int, a : int[]) = // better in F# to make the ctor
     let result = new Combination(n, k, temp) // use secondary ctor 
     result
 
-  member this.ApplyTo(a : string[]) : string[] =
+  member this.ApplyTo(a : int[]) : int[] =
     if a.Length <> n then failwith "Invalid array size in Combination.ApplyTo()"
     let result = Array.zeroCreate k
     for i = 0 to k-1 do
@@ -116,7 +116,7 @@ type Permutation(n : int, a : int[]) =
     let result = new Permutation(n, temp) // make Permutation from temp array
     result
 
-  member this.ApplyTo(a : string[]) : string[] =
+  member this.ApplyTo(a : int[]) : int[] =
     if a.Length <> n then failwith "Invalid array size in Permutation.ApplyTo()"
     let result = Array.zeroCreate n
     for i = 0 to n-1 do
