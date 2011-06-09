@@ -3,8 +3,6 @@
 #light
 open System
 open System.IO
-open Combinations
-open Util
 
 let encryptedChars = 
     File.ReadAllText("cipher1.txt").Split(',') 
@@ -13,16 +11,16 @@ let encryptedChars =
 let words =
     File.ReadAllText("words.txt").Split(',')
     |> Array.map (fun x -> x.Replace("\"", ""))
+    |> Set.ofArray
 
 let potentialKeys =
-    let arr = [|97..122|]
-    let combo = ref (new Combination(26, 3))
     seq {
-        yield (!combo).ApplyTo(arr)
-        while not((!combo).IsLast()) do
-            combo := (!combo).Successor()
-            yield (!combo).ApplyTo(arr) 
+        for c1 in ['a'..'z'] do
+            for c2 in ['a'..'z'] do
+                for c3 in ['a'..'z'] do
+                    yield [|c1;c2;c3;|] |> Array.map int
     }
+    |> Seq.distinct
     |> List.ofSeq
 
 let rec triplets (arr:int[]) =
@@ -52,7 +50,9 @@ let solve =
 
         let str = new String(decryptedChars)
 
-        words |> Array.fold (fun acc x -> if (str.Contains x) then acc + 1 else acc) 0, str
+        str.Split(' ') |> Array.fold (fun acc x -> if (words.Contains (x.ToUpper())) then acc + 1 else acc) 0, key, str
     )
-    |> Seq.maxBy(fun (k, v) -> k)
+    |> Seq.maxBy(fun (c, _, _) -> c)
+    |> fun (_, key, v) -> v
+    |> Seq.fold (fun acc c -> acc + (int c)) 0
 

@@ -33,7 +33,6 @@
   <Import Project="$(ProgramFiles)\Microsoft F#\v4.0\Microsoft.FSharp.Targets" />
   <ItemGroup>
     <Compile Include="Util.fs" />
-    <Compile Include="Combinations.fs" />
     <Compile Include="BigIntUtil.fs" />
     <Compile Include="Memoizer.fs" />
     <Compile Include="PrimeFinder.fs" />
