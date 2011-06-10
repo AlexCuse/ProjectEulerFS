@@ -1,5 +1,12 @@
 ﻿module ProjectEuler.BigIntUtil
 
+#light
+
+let factorial n = 
+    //can't pattern match on bigint
+    if n < 1I then 1I
+    else [n..(-1I)..1I]|> List.reduce (*)
+
 let digitsFrom n =
     let rec decomposeFunc n listSoFar =
         if n = 0I then listSoFar

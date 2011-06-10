@@ -52,6 +52,10 @@ let isPrime n =
     | n' when n' &&& 1 = 0 || n' % 3 = 0 -> false //even or multiple of 3
     | n' ->  checkRemaining false 5 n'  
 
+let factorial n = 
+    if n < 1 then 1
+    else [n..(-1)..1]|> List.reduce (*)
+
 let digitsFrom n =
     let rec decomposeFunc n listSoFar =
         match n with 

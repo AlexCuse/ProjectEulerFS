@@ -2,10 +2,7 @@
 
 #light
 
-let factorial n = 
-    //can't pattern match on bigint
-    if n < 1I then 1I
-    else [n..(-1I)..1I]|> List.reduce (*)
+open BigIntUtil
 
 let nCr n r = 
     (factorial n)/((factorial r) * (factorial (n - r)))

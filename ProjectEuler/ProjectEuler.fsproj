@@ -33,6 +33,7 @@
   <Import Project="$(ProgramFiles)\Microsoft F#\v4.0\Microsoft.FSharp.Targets" />
   <ItemGroup>
     <Compile Include="Util.fs" />
+    <Compile Include="LongUtil.fs" />
     <Compile Include="BigIntUtil.fs" />
     <Compile Include="Memoizer.fs" />
     <Compile Include="PrimeFinder.fs" />
@@ -96,6 +97,7 @@
     <Compile Include="Problem57.fs" />
     <Compile Include="Problem58.fs" />
     <Compile Include="Problem59.fs" />
+    <Compile Include="Problem60.fs" />
     <Compile Include="Program.fs" />
     <Content Include="names.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
