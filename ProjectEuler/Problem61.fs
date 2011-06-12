@@ -3,13 +3,7 @@
 #light
 open Util
 
-let cyclic a b =
-    let a' = a |> digitsFrom |> Array.ofList
-    let b' = b |> digitsFrom |> Array.ofList
-
-    a'.[(a'.Length - 2)..(a'.Length - 1)] = b'.[0..1]
-
-let combinations min max=
+let formulated min max =
     let roots = Seq.unfold(fun n -> Some(n, n + 1)) 1
 
     let tw sq = 
@@ -17,25 +11,31 @@ let combinations min max=
         |> Seq.skipWhile (fun n -> n < min)
         |> Seq.takeWhile (fun n -> n < max)
 
-    let namedTuplize name v =
-        name, v
+    let tuplize name v = name, v
 
-    let tri = roots |> Seq.map triangle |> tw |> Seq.map (namedTuplize "tri") |> List.ofSeq //|> Seq.filter (fun n -> not (hex |> Seq.exists(fun n' -> n' = n))) 
-    let sqr = roots |> Seq.map square |> tw |> Seq.map (namedTuplize "sqr") |> List.ofSeq
-    let pnt = roots |> Seq.map pentagon |> tw |> Seq.map (namedTuplize "pnt") |> List.ofSeq
-    let hex = roots |> Seq.map hexagon |> tw |> Seq.map (namedTuplize "hex") |> List.ofSeq
-    let hpt = roots |> Seq.map heptagon |> tw |> Seq.map (namedTuplize "hpt") |> List.ofSeq
-    let oct = roots |> Seq.map octagon |> tw |> Seq.map (namedTuplize "oct") |> List.ofSeq
+    let tri = roots |> Seq.map triangle |> tw |> Seq.map (tuplize "tri") |> List.ofSeq
+    let sqr = roots |> Seq.map square |> tw |> Seq.map (tuplize "sqr") |> List.ofSeq
+    let pnt = roots |> Seq.map pentagon |> tw |> Seq.map (tuplize "pnt") |> List.ofSeq
+    let hex = roots |> Seq.map hexagon |> tw |> Seq.map (tuplize "hex") |> List.ofSeq
+    let hpt = roots |> Seq.map heptagon |> tw |> Seq.map (tuplize "hpt") |> List.ofSeq
+    let oct = roots |> Seq.map octagon |> tw |> Seq.map (tuplize "oct") |> List.ofSeq
 
-    let all = List.concat [tri; sqr; pnt; hex; hpt; oct;]
+    List.concat [tri; sqr; pnt; hex; hpt; oct;]
 
+let cyclic a b =
+    let a' = a |> digitsFrom |> Array.ofList
+    let b' = b |> digitsFrom |> Array.ofList
+
+    a'.[(a'.Length - 2)..(a'.Length - 1)] = b'.[0..1]
+
+let answers candidates =
     let findMatches n excludeList =
-        all 
+        candidates 
         |> List.filter (fun (nm, _) -> not(excludeList |> List.exists(fun x -> x = nm)))
-        |> List.filter (fun (_, v) -> cyclic n v)
+        |> List.filter (fun (_, v) -> not (n = v) && cyclic n v)// check equality for situation where same number drawn from hex & tri, etc...
         
     seq {
-        for v1 in all do
+        for v1 in candidates do //one instance of cycle will always start with triangle num, and there are the most of these so could start with triangles (it is not much faster though)
             for v2 in findMatches (snd v1) ([fst v1]) do
                 for v3 in findMatches (snd v2) ([fst v1;fst v2]) do
                     for v4 in findMatches (snd v3) ([fst v1;fst v2; fst v3]) do
@@ -46,9 +46,8 @@ let combinations min max=
     }
 
 let solve =
-    (combinations 1000 10000)
+    answers (formulated 1000 10000)
     |> Seq.map (fun n -> (n |> List.sum), n)
-    |> Seq.distinctBy (fun (sum, _) -> sum)
     |> Seq.head
 
 
