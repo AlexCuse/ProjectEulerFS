@@ -27,3 +27,25 @@ let digitsFrom n =
 
 let toNumber digits =
     digits |> Seq.fold (fun acc x -> acc * 10L + x) 0L
+
+//shapes
+let isPentagon n =
+    ((sqrt(float (24L * n + 1L)) + 1.0) % 6.0) = 0.0
+
+let triangle n =
+    (n * (n+1L)) / 2L
+
+let square n =
+    n * n
+
+let pentagon n =
+    (n * ((3L * n) - 1L)) / 2L
+
+let hexagon n =
+    n * ((2L * n) - 1L)
+
+let heptagon n =
+    (n * ((5L*n) - 3L)) / 2L
+
+let octagon n =
+    n * ((3L * n) - 2L)
