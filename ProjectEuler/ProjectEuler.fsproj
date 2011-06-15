@@ -102,6 +102,7 @@
     <Compile Include="Problem62.fs" />
     <Compile Include="Problem63.fs" />
     <Compile Include="Problem64.fs" />
+    <Compile Include="Problem65.fs" />
     <Compile Include="Program.fs" />
     <Content Include="names.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -119,6 +120,9 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core" />
+    <Reference Include="FSharp.PowerPack">
+      <HintPath>..\resources\F# Power Pack\FSharp.PowerPack.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core">
