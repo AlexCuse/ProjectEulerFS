@@ -13,14 +13,14 @@ let formulated min max =
 
     let tuplize name v = name, v
 
-    let tri = roots |> Seq.map triangle |> tw |> Seq.map (tuplize "tri") |> List.ofSeq
-    let sqr = roots |> Seq.map square |> tw |> Seq.map (tuplize "sqr") |> List.ofSeq
-    let pnt = roots |> Seq.map pentagon |> tw |> Seq.map (tuplize "pnt") |> List.ofSeq
-    let hex = roots |> Seq.map hexagon |> tw |> Seq.map (tuplize "hex") |> List.ofSeq
-    let hpt = roots |> Seq.map heptagon |> tw |> Seq.map (tuplize "hpt") |> List.ofSeq
-    let oct = roots |> Seq.map octagon |> tw |> Seq.map (tuplize "oct") |> List.ofSeq
-
-    List.concat [tri; sqr; pnt; hex; hpt; oct;]
+    Seq.concat [
+        roots |> Seq.map triangle |> tw |> Seq.map (tuplize "tri") |> List.ofSeq
+        roots |> Seq.map square |> tw |> Seq.map (tuplize "sqr") |> List.ofSeq
+        roots |> Seq.map pentagon |> tw |> Seq.map (tuplize "pnt") |> List.ofSeq
+        roots |> Seq.map hexagon |> tw |> Seq.map (tuplize "hex") |> List.ofSeq
+        roots |> Seq.map heptagon |> tw |> Seq.map (tuplize "hpt") |> List.ofSeq
+        roots |> Seq.map octagon |> tw |> Seq.map (tuplize "oct") |> List.ofSeq
+    ] |> List.ofSeq
 
 let cyclic a b =
     let a' = a |> digitsFrom |> Array.ofList

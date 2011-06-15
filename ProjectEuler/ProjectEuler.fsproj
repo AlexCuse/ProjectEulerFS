@@ -33,6 +33,7 @@
   <Import Project="$(ProgramFiles)\Microsoft F#\v4.0\Microsoft.FSharp.Targets" />
   <ItemGroup>
     <Compile Include="Util.fs" />
+    <Compile Include="Cycle.fs" />
     <Compile Include="LongUtil.fs" />
     <Compile Include="BigIntUtil.fs" />
     <Compile Include="Memoizer.fs" />
