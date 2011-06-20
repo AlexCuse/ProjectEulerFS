@@ -3,7 +3,7 @@
 #light
 
 let primes =
-    PrimeFinder.primes 999999L
+    PrimeFinder.primes 100000L
     |> List.map int
     |> Seq.ofList
 
