@@ -103,6 +103,8 @@
     <Compile Include="Problem63.fs" />
     <Compile Include="Problem64.fs" />
     <Compile Include="Problem65.fs" />
+    <Compile Include="Problem66.fs" />
+    <Compile Include="Problem67.fs" />
     <Compile Include="Program.fs" />
     <Content Include="names.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -116,6 +118,9 @@
     </Content>
     <Content Include="cipher1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="triangle.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
