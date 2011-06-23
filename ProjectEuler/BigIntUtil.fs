@@ -14,7 +14,7 @@ let digitsFrom n =
     decomposeFunc n []
 
 let toNumber digits =
-    digits |> Seq.fold (fun acc x -> acc * 10 + x) 0
+    digits |> Seq.fold (fun acc x -> acc * 10I + x) 0I
 
 let isPrime n =
     let rec checkRemaining composite i num =
