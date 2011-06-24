@@ -2,7 +2,7 @@
 
 #light
 
-open Util
+open BigIntUtil
 
 type Segment (f, s, t) =
     member x.First = f
@@ -16,8 +16,8 @@ type Segment (f, s, t) =
                 yield x.First
                 yield x.Second
                 yield x.Third
-        } |> List.ofSeq
-    
+        } |> List.ofSeq        
+
     member x.ContainsDigit(d) =
         x.First = d || x.Second = d || x.Third = d
 
@@ -38,28 +38,29 @@ let potentialSegments =
                     yield Segment(n, n', n'')
     } |> List.ofSeq
 
-let findNextCandidates (candidates:List<Segment>) (current:Segment) (segmentsSoFar:List<Segment>) =
+let findNextSegmentCandidates (candidates:List<Segment>) (current:Segment) (segmentsSoFar:List<Segment>) isLast =
+    let firstSecond = segmentsSoFar |> List.head |> fun x -> x.Second
     let excludeDigits =
         segmentsSoFar 
             |> List.map (fun s -> s.Digits) 
             |> List.collect (fun l -> l) 
-            |> List.filter (fun d -> not (d = current.Second))
+            |> List.filter (fun d -> (not(isLast) || not (d = firstSecond)) && not (d = current.Third))
+            |> Set.ofList   
 
     candidates
-        |> List.filter (fun s -> not (s = current))
         |> List.filter (fun s -> not (segmentsSoFar |> List.exists (fun x -> x = s)))
+        |> List.filter (fun s -> not (excludeDigits |> Set.contains s.First))
+        |> List.filter (fun s -> (isLast && s.Third = firstSecond) || (not (isLast) && not (excludeDigits |> Set.contains s.Third)))
         |> List.filter (fun s -> s.Second = current.Third)
-        |> List.filter (fun s -> not (excludeDigits |> List.exists (fun x -> x = s.First)))
-        |> List.filter (fun s -> not (excludeDigits |> List.exists (fun x -> x = s.Third)))
 
 let rings (s:Segment) =
-    let candidates = potentialSegments |> List.filter (fun x -> x.Sum = s.Sum && not (s = x))
+    let allCandidates = potentialSegments |> List.filter (fun x -> x.Sum = s.Sum && not (s = x))
 
     seq {
-        for s1 in findNextCandidates candidates s [s] do
-            for s2 in findNextCandidates candidates s [s;s1] do
-                for s3 in findNextCandidates candidates s [s;s1;s2] do
-                    for s4 in findNextCandidates candidates s [s;s1;s2;s3] do
+        for s1 in findNextSegmentCandidates allCandidates s [s] false do
+            for s2 in findNextSegmentCandidates allCandidates s1 [s;s1] false do
+                for s3 in findNextSegmentCandidates allCandidates s2 [s;s1;s2] false do
+                    for s4 in findNextSegmentCandidates allCandidates s3 [s;s1;s2;s3] true do
                         yield [s;s1;s2;s3;s4]
     } |> List.ofSeq
 
@@ -75,20 +76,19 @@ let score (x:List<Segment>) =
     x, (p1 @ p2) 
         |> List.map (fun seg -> seg.Digits) 
         |> List.collect (fun dgts -> dgts)
-        |> BigIntUtil.toNumber
+        |> List.map (fun dgt -> digitsFrom dgt) //handle splitting ten
+        |> List.collect (fun dgts -> dgts)
+        |> toNumber
 
-//10 must appear in first position
 let solve =
+    //10 must appear in first position (meaning it only shows once, otherwise there would be 17 digits - so 1 occurrence of the "winning" pattern has got to have 10 in the first position of first segment)
     potentialSegments
           |> Seq.filter (fun s -> s.First = 10I) 
           |> Seq.map rings
-          |> Seq.length
-// rings is feeding back empty lists
-
-//          |> Seq.collect (fun l -> l)
-//          |> Seq.distinct
-//          |> Seq.map score
-//          |> Seq.maxBy(fun (_, scr) -> scr)
+          |> Seq.collect (fun l -> l)
+          |> Seq.distinct
+          |> Seq.map score
+          |> Seq.maxBy(fun (_, scr) -> scr)
     
 
 
