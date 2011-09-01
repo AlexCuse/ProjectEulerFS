@@ -40,6 +40,11 @@ let factors x =
             else
                 lowFactors @ (highFactors |> List.rev)
 
+let greatestCommonFactor n d =
+    let num = factors n
+    let den = factors d
+    num |> List.filter (fun v -> den |> (List.exists (fun i -> i = v))) |> List.max
+
 let isPrime n =
     let rec checkRemaining composite i num =
         if composite then false

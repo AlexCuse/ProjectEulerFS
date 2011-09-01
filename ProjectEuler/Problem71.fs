@@ -2,7 +2,7 @@
 
 #light
 
-//http://en.wikipedia.org/wiki/Farey_sequence
+//http://en.wikipedia.org/wiki/Farey_sequence  (neighbors)
 
 let solve = 
     let mutable a, c = 2, 5
