@@ -2,32 +2,6 @@
 
 module ProjectEuler.Problem73
 
-
-// Using full sequence takes ~2 min (on slowish machine)
-
-//let farey limit =
-//    let bigRatify n d = BigRational.FromInt(n) / BigRational.FromInt(d)
-//    seq {
-//        let p = ref 0
-//        let q = ref 1
-//        let p' = ref 1
-//        let q' = ref limit
-//        yield bigRatify !p !q
-//        while not (!p = 1 && !q = 1) do
-//            let c = (!q + limit) / !q'
-//            let p'' = c * !p' - !p
-//            let q'' = c * !q' - !q
-//            p := !p'
-//            q := !q'
-//            p' := p''
-//            q' := q''
-//            yield bigRatify !p !q }
-
-//let solve =
-//    farey 12000
-//    |> Seq.filter (fun br -> br > 1N/3N && br < 1N/2N)
-//    |> Seq.length
-
 // found trick to directly calculate farey sequence length (for section between 1/minD and 1/maxD, exclusive) here: 
 //   http://freelancersunite.net/project_euler/project-euler-problem-73/ 
 
@@ -42,8 +16,40 @@ let solve =
     partialFareyLength 2 3 12000
 
 (*
+// Using full sequence takes ~2 min (on slowish machine)
 
-// Full Farey Length - 1 + (sum totient for 1 to limit)
+//TODO: tweaking this to enable retrieving partial sequence (with min/max denominator) could be interesting
+let farey limit =
+    let bigRatify n d = BigRational.FromInt(n) / BigRational.FromInt(d)
+    seq {
+        let p = ref 0
+        let q = ref 1
+        let p' = ref 1
+        let q' = ref limit
+        yield bigRatify !p !q
+        while not (!p = 1 && !q = 1) do
+            let c = (!q + limit) / !q'
+            let p'' = c * !p' - !p
+            let q'' = c * !q' - !q
+            p := !p'
+            q := !q'
+            p' := p''
+            q' := q''
+            yield bigRatify !p !q }
+
+let solve =
+    farey 12000
+    |> Seq.filter (fun br -> br > 1N/3N && br < 1N/2N)
+    |> Seq.length
+
+*)
+
+
+
+
+(*
+
+// Full Farey Length = 1 + (sum totient for 1 to limit)
 
 open LongUtil
 
